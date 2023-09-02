@@ -1,12 +1,23 @@
 import player
 import time
+from typing import List
 
 
 class TicTacToe:
+    """
+    The Tic Tac Toe game board.
+    Depends on the player module for assigning players.
+    """
+
     def __init__(self) -> None:
         self.board = [" "] * 9
 
     def print_board(self, show_pos=False):
+        """
+        Prints the board.
+        If show_pos is set to True, it will print the positional coords
+        of the board.
+        """
         if show_pos:
             for row in [
                 [str(i + 1) for i in range(j * 3, j * 3 + 3)] for j in range(3)
@@ -16,20 +27,37 @@ class TicTacToe:
             for row in [self.board[j * 3 : j * 3 + 3] for j in range(3)]:
                 print(" | ".join(row))
 
-    def valid_moves(self):
+    def valid_moves(self) -> List:
+        """
+        Returns a list of valid moves.
+        """
         moves = [idx + 1 for idx, spot in enumerate(self.board) if spot == " "]
         return moves
 
     def empty_squares(self):
+        """
+        Find whether there are empty squares on board.
+        Returns a boolean.
+        """
         return " " in self.board
 
     def num_empty_squares(self):
+        """
+        Returns the number of empty squares.
+        """
         return self.board.count(" ")
 
     def mark_move(self, move: int, marker: str):
+        """
+        Method to mark the players move on board
+        """
         self.board[move] = marker
 
     def check_winner(self, marker: str):
+        """
+        Method which checks whether a player has won or not.
+        Returns a boolean, True for success.
+        """
         for j in range(3):
             # 0 3 6 | 1 4 7 | 2 5 8
             if all([self.board[j + 3 * i] == marker for i in range(3)]):
@@ -47,7 +75,10 @@ class TicTacToe:
 
 
 def play(game: TicTacToe):
-    # Select x and o players
+    """
+    The game mechanics
+    Takes the gameboard as input
+    """
     game.print_board(True)
     print()
     marker = input("Choose your marker! (X or O): ").capitalize()
@@ -85,8 +116,3 @@ def play(game: TicTacToe):
                 return
 
     print("It's a draw :()")
-
-
-if __name__ == "__main__":
-    new_game = TicTacToe()
-    play(new_game)
