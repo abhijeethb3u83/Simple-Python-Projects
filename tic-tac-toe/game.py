@@ -94,25 +94,29 @@ def play(game: TicTacToe):
         print(f"{x_player.get_name()}'s move")
         xmove = x_player.get_move(game)
         game.mark_move(xmove, x_player.get_marker())
+        print(f"{x_player.get_name()}'s marks square {xmove+1}")
         time.sleep(1)
         game.print_board()
         time.sleep(1)
         move_count += 1
         if move_count > 4:
             if game.check_winner(x_player.get_marker()):
-                print(f"{x_player.get_name()} won!")
+                print(f"\n{o_player.get_name()} : (｀□′)╯┴┴")
+                print(f"{x_player.get_name()} wins!")
                 return
 
         print(f"{o_player.get_name()}'s move")
         omove = o_player.get_move(game)
         game.mark_move(omove, o_player.get_marker())
+        print(f"{o_player.get_name()}'s marks square {omove+1}")
         time.sleep(1)
         game.print_board()
         time.sleep(1)
         move_count += 1
         if move_count > 4:
             if game.check_winner(o_player.get_marker()):
-                print(f"{o_player.get_name()} won!")
+                print(f"\n{x_player.get_name()} : (｀□′)╯┴┴")
+                print(f"{o_player.get_name()} wins!")
                 return
 
     print("It's a draw :()")
