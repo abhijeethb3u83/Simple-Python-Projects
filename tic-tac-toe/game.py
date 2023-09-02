@@ -53,23 +53,25 @@ class TicTacToe:
         """
         self.board[move] = marker
 
-    def check_winner(self, marker: str):
+    def check_winner(self, square: int, marker: str):
         """
         Method which checks whether a player has won or not.
         Returns a boolean, True for success.
         """
-        for j in range(3):
-            # 0 3 6 | 1 4 7 | 2 5 8
-            if all([self.board[j + 3 * i] == marker for i in range(3)]):
+        col = square % 3
+        row = square // 3
+
+        if all([self.board[slice(row*3,row*3+3)] == marker]):
+            return True
+        if all([self.board[slice(col,col+7, 3)] == marker]):
+            return True
+        
+        if square % 2 == 0:
+            if all([self.board[i] == marker] for i in [0,4,8]):
                 return True
-            # 0 1 2 | 3 4 5 | 6 7 8
-            if all([self.board[i + 3 * j] == marker for i in range(3)]):
+            if all([self.board[i] == marker] for i in [2,4,6]):
                 return True
 
-        if all([self.board[i] == marker for i in [0, 4, 8]]):
-            return True
-        if all([self.board[i] == marker for i in [2, 4, 6]]):
-            return True
 
         return False
 
@@ -100,7 +102,7 @@ def play(game: TicTacToe):
         time.sleep(1)
         move_count += 1
         if move_count > 4:
-            if game.check_winner(x_player.get_marker()):
+            if game.check_winner(xmove, x_player.get_marker()):
                 print(f"\n{o_player.get_name()} : (｀□′)╯┴┴")
                 print(f"{x_player.get_name()} wins!")
                 return
@@ -114,7 +116,7 @@ def play(game: TicTacToe):
         time.sleep(1)
         move_count += 1
         if move_count > 4:
-            if game.check_winner(o_player.get_marker()):
+            if game.check_winner(omove, o_player.get_marker()):
                 print(f"\n{x_player.get_name()} : (｀□′)╯┴┴")
                 print(f"{o_player.get_name()} wins!")
                 return
